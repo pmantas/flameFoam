@@ -2,7 +2,7 @@
 
 ## [0.9]
 ### Changed
-- Port to OF8
+- Port to OpenFOAM-8
 
 ## [0.8]
 ### Changed
