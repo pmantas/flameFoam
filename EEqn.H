@@ -16,7 +16,7 @@
             )
             : -dpdt
         )
-      - fvm::laplacian(turbulence.alphaEff(), he)
+      + thermophysicalTransport.divq(he)
         ==
         rho*(U&g)
       + cSource*(Y_H2_0[i]-Y_H2_99[i])*H0*(min(c, scalar(1))-c.oldTime())/(c-c.oldTime()+1E-10) // renormalized to max c = 1

@@ -46,10 +46,10 @@ if (ignite[i])
 
     run_info << "Ignition activated:\n" << endl;
 
-    const scalar ignX = readScalar(combustionProperties.lookup("ignX"));
-    const scalar ignY = readScalar(combustionProperties.lookup("ignY"));
-    const scalar ignZ = readScalar(combustionProperties.lookup("ignZ"));
-    const scalar ignR = readScalar(combustionProperties.lookup("ignitionRadius"));
+    const scalar ignX = combustionProperties.lookup<scalar>("ignX");
+    const scalar ignY = combustionProperties.lookup<scalar>("ignY");
+    const scalar ignZ = combustionProperties.lookup<scalar>("ignZ");
+    const scalar ignR = combustionProperties.lookup<scalar>("ignitionRadius");
     run_info << "\tIgnition radius:\t" << ignR << endl;
 
     forAll (mesh.C(), celli)
@@ -82,8 +82,8 @@ fvScalarMatrix cEqn
     fvm::ddt(rho, c)
   + fvm::div(phi, c)
   ==
-     fvm::laplacian(turbulence.muEff()/ScT[i], c)
-  +  cSource
+    fvm::laplacian(turbulence.muEff()/ScT[i], c)
+  + cSource
 );
 
 cEqn.relax();

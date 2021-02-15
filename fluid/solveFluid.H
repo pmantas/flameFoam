@@ -1,4 +1,4 @@
-if (pimples.nCorrPimple() <= 1)
+if (pimples.firstPimpleIter())
 {
     #include "rhoEqn.H"
 }
@@ -19,6 +19,7 @@ while (pimple.correct())
 if (pimples.pimpleTurbCorr(i))
 {
     turbulence.correct();
+    thermophysicalTransport.correct();
 }
 if (pimples.finalPimpleIter())
 {

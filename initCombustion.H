@@ -15,15 +15,15 @@ IOdictionary combustionProperties
     )
 );
 
-ScT[i] = readScalar(combustionProperties.lookup("ScT"));
-X_H2_0[i] = readScalar(combustionProperties.lookup("X_H2_0"));
+ScT[i] = combustionProperties.lookup<scalar>("ScT");
+X_H2_0[i] = combustionProperties.lookup<scalar>("X_H2_0");
 run_info << "Initial hydrogen concentration: " << X_H2_0[i] << endl;
 
 Y_H2_0[i] = dimensionedScalar("Y_H2_0", molarH2*X_H2_0[i]*thermoFluid[i].p().average()/(rhoFluid[i].average()*constant::physicoChemical::R*thermoFluid[i].T().average()));
 Y_H2_99[i] = 0;
 run_info << "Initial hydrogen mass fraction: " << Y_H2_0[i] << endl;
 
-X_H2O[i] = readScalar(combustionProperties.lookup("X_H2O"));
+X_H2O[i] = combustionProperties.lookup<scalar>("X_H2O");
 run_info << "Initial steam concentration: " << X_H2O[i] << endl;
 
 if ((X_H2_0_c>1) || (X_H2O_c>1))
@@ -59,7 +59,7 @@ Tref_value[i] = Tref.value();
 pref_value[i] = pref.value();
 run_info << "Reference laminar flame speed: " << S_L0 << endl;
 
-Le[i] = readScalar(combustionProperties.lookup("Le"));
+Le[i] = combustionProperties.lookup<scalar>("Le");
 run_info << "Le: " << Le[i] << endl;
 
 Switch ignition(combustionProperties.lookup("ignite"));
@@ -123,7 +123,7 @@ run_info << "Correlation: " << Correlation[i] << endl;
 dimensionedScalar alpha_u = dimensionedScalar("alpha_u", dimensionSet(0,-0.5,0.25,0,0,0,0), 0);
 if (Correlation[i] == "Zimont")
 {
-    const scalar ZimontA = readScalar(combustionProperties.lookup("ZimontA"));
+    const scalar ZimontA = combustionProperties.lookup<scalar>("ZimontA");
     const dimensionedScalar alpha_read(combustionProperties.lookup("alpha"));
     run_info << "\tZimont coefficient: " << ZimontA << endl;
     run_info << "\tUnburned alpha: " << alpha_read << endl;

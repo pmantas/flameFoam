@@ -7,7 +7,8 @@ PtrList<uniformDimensionedVectorField> gFluid(fluidRegions.size());
 PtrList<uniformDimensionedScalarField> hRefFluid(fluidRegions.size());
 PtrList<volScalarField> ghFluid(fluidRegions.size());
 PtrList<surfaceScalarField> ghfFluid(fluidRegions.size());
-PtrList<compressible::turbulenceModel> turbulenceFluid(fluidRegions.size());
+PtrList<compressible::momentumTransportModel> turbulenceFluid(fluidRegions.size());
+PtrList<rhoReactionThermophysicalTransportModel> thermophysicalTransportFluid(fluidRegions.size());
 PtrList<volScalarField> cFluid(fluidRegions.size());
 PtrList<volScalarField> p_rghFluid(fluidRegions.size());
 PtrList<radiationModel> radiation(fluidRegions.size());
@@ -212,7 +213,7 @@ forAll(fluidRegions, i)
     turbulenceFluid.set
     (
         i,
-        compressible::turbulenceModel::New
+        compressible::momentumTransportModel::New
         (
             rhoFluid[i],
             UFluid[i],
@@ -220,8 +221,18 @@ forAll(fluidRegions, i)
             thermoFluid[i]
         ).ptr()
     );
-
     run_info << "Turbulence model: " << turbulenceFluid[i].type() << endl;
+
+    Info<< "    Adding to thermophysicalTransportFluid\n" << endl;
+    thermophysicalTransportFluid.set
+    (
+        i,
+        rhoReactionThermophysicalTransportModel::New
+        (
+            turbulenceFluid[i],
+            thermoFluid[i]
+        ).ptr()
+    );
 
     p_rghFluid.set
     (

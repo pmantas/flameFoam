@@ -10,7 +10,10 @@ volScalarField& rho = rhoFluid[i];
 volVectorField& U = UFluid[i];
 surfaceScalarField& phi = phiFluid[i];
 
-compressible::turbulenceModel& turbulence = turbulenceFluid[i];
+compressible::momentumTransportModel& turbulence = turbulenceFluid[i];
+rhoReactionThermophysicalTransportModel& thermophysicalTransport =
+        thermophysicalTransportFluid[i];
+
 volScalarField& K = KFluid[i];
 volScalarField& dpdt = dpdtFluid[i];
 
@@ -30,6 +33,9 @@ IOMRFZoneList& MRF = MRFfluid[i];
 fv::options& fvOptions = fluidFvOptions[i];
 
 pimpleNoLoopControl& pimple = pimples.pimple(i);
+
+// Placeholder, will be used for moving mesh support
+autoPtr<surfaceVectorField> rhoUf(nullptr);
 
 volScalarField& S_L = S_LFluid[i];
 volScalarField& S_T = S_TFluid[i];
